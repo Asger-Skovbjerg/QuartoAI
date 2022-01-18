@@ -21,11 +21,18 @@ class Quarto:
         self._check_if_won()
 
     def _check_if_won(self):
-        for x in range(4):
-            if self.board[x, :, 0].sum() == 4:
-                if self._check_slice_for_victory(self.board[x, :, :]):
-                    print("VICTORY")
-                    print(self.board)
+        for xy in range(4):
+            if self.board[xy, :, 0].sum() == 4:
+                if self._check_slice_for_victory(self.board[xy, :, :]):
+                    pass
+            if self.board[:,xy,0].sum()==4:
+                if self._check_slice_for_victory(self.board[:,xy, :]):
+                    pass
+        diagonal_1 = np.diagonal(self.board).sum(axis=1)
+        if diagonal_1[0]==4:
+            if 4 in diagonal_1[1:] or 0 in diagonal_1[1:]:
+                print("DIAGONAL_VIC")
+        #print(np.diagonal(self.board),np.diagonal(self.board)[0].sum(),)
 
     def _check_slice_for_victory(self, board_slice):
         for quality in range(1, 5):
